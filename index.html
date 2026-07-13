@@ -2,294 +2,353 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>achei. — encontre o profissional certo</title>
+<title>ProFind — o Google dos especialistas</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20,400,0,0" rel="stylesheet">
 <style>
   :root{
-    --ink:#16233D;
-    --ink-700:#1F314F;
-    --paper:#F4F5F1;
-    --surface:#FFFFFF;
-    --line:#DFDFD5;
-    --gray:#5B5F58;
-    --gray-light:#8A8D82;
-    --ochre:#C9821F;
-    --ochre-dark:#7A4E12;
-    --ochre-bg:#FBEFDC;
-    --teal:#1F7A5C;
-    --teal-dark:#123F30;
-    --teal-bg:#E3F1EA;
-    --font-display:'Space Grotesk',sans-serif;
-    --font-body:'IBM Plex Sans',sans-serif;
-    --font-mono:'IBM Plex Mono',monospace;
+    --indigo:#4F46E5; --purple:#7C3AED; --navy:#101A33; --navy-2:#16213F;
+    --bg:#F7F8FC; --surface:#FFFFFF; --border:#E7E9F1;
+    --text:#12142A; --text-2:#6B7080; --text-3:#9AA0B4;
+    --amber:#F5A623; --sponsor-bg:#FFF3E0; --sponsor-text:#B45309;
+    --green:#16A34A; --indigo-bg:#EEF0FF; --radius:14px;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
-  body{
-    background:var(--paper);
-    color:var(--ink);
-    font-family:var(--font-body);
-    line-height:1.5;
-    padding-bottom:4rem;
-  }
-  .wrap{max-width:840px;margin:0 auto;padding:0 24px;}
+  body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.5;}
+  .icon{font-family:'Material Symbols Outlined';font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20;font-size:20px;line-height:1;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
+  a{text-decoration:none;color:inherit;}
+  button{font-family:'Inter',sans-serif;cursor:pointer;}
 
-  /* nav */
-  nav{background:var(--ink);color:#fff;}
-  nav .wrap{display:flex;align-items:center;justify-content:space-between;padding-top:18px;padding-bottom:18px;}
-  .logo{font-family:var(--font-display);font-weight:600;font-size:20px;letter-spacing:-0.02em;}
-  .logo span{color:var(--ochre);}
-  .nav-links{display:flex;gap:24px;font-size:14px;}
-  .nav-links a{color:#D8DCE6;text-decoration:none;}
-  .nav-links a.cta{color:#fff;border:1px solid #3A4A68;border-radius:6px;padding:7px 14px;}
+  /* ---- top hero ---- */
+  .hero-outer{background:var(--navy);padding:40px 0 60px;}
+  .hero-grid{display:grid;grid-template-columns:280px 1fr;gap:28px;}
+  .brand-panel{color:#fff;padding:8px 0;}
+  .brand-row{display:flex;align-items:center;gap:10px;margin-bottom:26px;}
+  .brand-mark{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--indigo),var(--purple));display:flex;align-items:center;justify-content:center;}
+  .brand-mark .icon{color:#fff;font-size:19px;}
+  .brand-name{font-weight:700;font-size:19px;}
+  .brand-sub{font-size:12.5px;color:#AEB4CC;margin-top:1px;}
+  .brand-panel h1{font-size:29px;font-weight:800;line-height:1.18;margin-bottom:14px;}
+  .brand-panel h1 .grad{background:linear-gradient(90deg,#818CF8,#C4B5FD);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .brand-panel p.lead{color:#B7BCD4;font-size:14px;margin-bottom:22px;}
+  .feat{display:flex;align-items:center;gap:9px;font-size:13.5px;color:#D6D9EA;margin-bottom:12px;}
+  .feat .icon{font-size:16px;color:#A5B4FC;}
 
-  /* hero */
-  header.hero{padding:56px 0 28px;text-align:center;}
-  header.hero h1{
-    font-family:var(--font-display);font-weight:600;
-    font-size:34px;line-height:1.15;letter-spacing:-0.01em;
-    max-width:560px;margin:0 auto 28px;
-  }
-  .search-box{
-    display:flex;gap:8px;background:var(--surface);
-    border:1.5px solid var(--ink);border-radius:10px;
-    padding:6px;max-width:600px;margin:0 auto;
-  }
-  .search-box input{
-    flex:1;border:none;outline:none;background:transparent;
-    font-family:var(--font-body);font-size:15px;padding:10px 12px;color:var(--ink);
-  }
-  .search-box input::placeholder{color:var(--gray-light);}
-  .search-box button{
-    background:var(--ink);color:#fff;border:none;border-radius:6px;
-    padding:0 22px;font-family:var(--font-body);font-weight:500;font-size:14px;cursor:pointer;
-  }
-  .examples{max-width:600px;margin:16px auto 0;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;}
-  .examples span{
-    font-size:13px;color:var(--gray);background:var(--surface);
-    border:1px solid var(--line);border-radius:20px;padding:6px 14px;
-    font-style:italic;
-  }
+  .hero-card{background:var(--surface);border-radius:20px;padding:26px 30px 30px;}
+  .hero-nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:26px;}
+  .hero-nav .links{display:flex;gap:26px;font-size:13.5px;color:var(--text-2);align-items:center;}
+  .hero-nav .enter-btn{background:var(--indigo);color:#fff;padding:9px 18px;border-radius:9px;font-size:13.5px;font-weight:600;border:none;}
+  .hero-search-row{display:grid;grid-template-columns:1fr 220px;gap:30px;}
+  .hero-search-row h2{font-size:27px;font-weight:800;text-align:center;margin-bottom:20px;}
+  .hero-search-row h2 .grad{background:linear-gradient(90deg,var(--indigo),var(--purple));-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .search-bar{display:flex;gap:10px;background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:6px;margin-bottom:14px;}
+  .search-bar input{flex:1;border:none;background:transparent;outline:none;font-size:14.5px;padding:10px 10px;font-family:'Inter',sans-serif;}
+  .search-bar .icon{align-self:center;margin-left:8px;color:var(--text-3);}
+  .search-bar button{background:var(--indigo);color:#fff;border:none;border-radius:9px;padding:0 22px;font-weight:600;font-size:13.5px;}
+  .examples-label{font-size:12.5px;color:var(--text-3);margin-bottom:9px;}
+  .example-chips{display:flex;flex-wrap:wrap;gap:8px;}
+  .example-chips span{font-size:12.5px;background:var(--indigo-bg);color:var(--indigo);border-radius:8px;padding:6px 12px;font-weight:500;}
+  .hero-stats{display:flex;flex-direction:column;gap:16px;justify-content:center;}
+  .hero-stat{display:flex;align-items:center;gap:10px;}
+  .hero-stat .icon{background:var(--indigo-bg);color:var(--indigo);border-radius:9px;padding:6px;font-size:18px;}
+  .hero-stat b{display:block;font-size:14.5px;font-weight:700;}
+  .hero-stat span{font-size:11.5px;color:var(--text-2);}
 
-  /* consultora */
-  .consultora{
-    max-width:600px;margin:36px auto 0;background:var(--surface);
-    border:1px solid var(--line);border-radius:12px;padding:20px 22px;
-  }
-  .consultora .label{
-    font-family:var(--font-mono);font-size:11px;letter-spacing:0.06em;
-    color:var(--teal-dark);text-transform:uppercase;margin-bottom:12px;display:block;
-  }
-  .bubble{max-width:82%;padding:9px 14px;border-radius:10px;font-size:14px;margin-bottom:8px;}
-  .bubble.user{background:var(--paper);margin-left:auto;border-bottom-right-radius:2px;}
-  .bubble.ia{background:var(--teal-bg);color:var(--teal-dark);border-bottom-left-radius:2px;}
-  .bubble.ia b{color:var(--teal-dark);}
-  .consultora .result-line{
-    margin-top:14px;padding-top:14px;border-top:1px dashed var(--line);
-    font-family:var(--font-mono);font-size:12.5px;color:var(--gray);
-  }
+  .how-block{margin-top:26px;padding-top:24px;border-top:1px solid var(--border);}
+  .how-block h3{font-size:15px;font-weight:700;margin-bottom:16px;}
+  .how-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+  .how-step .icon{background:var(--indigo-bg);color:var(--indigo);border-radius:10px;padding:8px;font-size:19px;display:inline-flex;margin-bottom:10px;}
+  .how-step b{display:block;font-size:13px;font-weight:700;margin-bottom:3px;}
+  .how-step p{font-size:12px;color:var(--text-2);}
 
-  /* results section header */
-  .results-meta{max-width:600px;margin:44px auto 0;display:flex;align-items:baseline;justify-content:space-between;}
-  .results-meta h2{font-family:var(--font-display);font-weight:600;font-size:18px;}
-  .results-meta span{font-family:var(--font-mono);font-size:12.5px;color:var(--gray-light);}
+  /* ---- results section ---- */
+  .results-outer{padding:36px 0;}
+  .results-grid{display:grid;grid-template-columns:230px 1fr;gap:22px;}
+  .filters{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px;height:fit-content;}
+  .filters-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
+  .filters-head h4{font-size:14px;font-weight:700;}
+  .filters-head span{font-size:12px;color:var(--indigo);font-weight:600;}
+  .f-group{margin-bottom:18px;}
+  .f-group label{font-size:12px;font-weight:600;color:var(--text-2);display:block;margin-bottom:8px;}
+  .f-select{width:100%;font-size:13px;border:1px solid var(--border);border-radius:8px;padding:8px 10px;color:var(--text);background:var(--bg);}
+  .f-check{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--text-2);margin-bottom:7px;}
+  .f-range{width:100%;accent-color:var(--indigo);}
 
-  .section-tag{
-    max-width:600px;margin:28px auto 10px;display:flex;align-items:center;gap:10px;
-  }
-  .section-tag .dot{width:6px;height:6px;border-radius:50%;background:var(--gray-light);}
-  .section-tag.sponsored .dot{background:var(--ochre);}
-  .section-tag.organic .dot{background:var(--teal);}
-  .section-tag p{font-family:var(--font-mono);font-size:11.5px;letter-spacing:0.08em;text-transform:uppercase;color:var(--gray);}
+  .results-main h2{font-size:17px;font-weight:700;margin-bottom:16px;}
+  .results-label{font-size:12px;font-weight:700;color:var(--text-3);letter-spacing:.04em;text-transform:uppercase;margin:4px 0 10px;}
 
-  /* cards */
-  .card{
-    max-width:600px;margin:0 auto 12px;background:var(--surface);
-    border:1px solid var(--line);border-radius:12px;padding:18px 20px;
-    display:flex;gap:14px;position:relative;
-  }
-  .card.sponsored{border-left:3px solid var(--ochre);border-radius:2px 12px 12px 2px;}
-  .avatar{
-    width:52px;height:52px;border-radius:50%;flex-shrink:0;
-    display:flex;align-items:center;justify-content:center;
-    font-family:var(--font-display);font-weight:600;font-size:15px;color:#fff;
-  }
-  .card-body{flex:1;min-width:0;}
-  .card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
-  .name-line{font-size:15.5px;font-weight:500;}
-  .name-line small{font-weight:400;color:var(--gray);font-size:13px;}
-  .sponsored-tag{
-    font-family:var(--font-mono);font-size:10px;letter-spacing:0.06em;color:var(--ochre-dark);
-    background:var(--ochre-bg);border-radius:4px;padding:2px 7px;white-space:nowrap;
-  }
-  .meta-line{font-size:13px;color:var(--gray);margin-top:2px;}
-  .ai-note{
-    margin-top:9px;font-size:13px;color:var(--teal-dark);
-    background:var(--teal-bg);border-radius:6px;padding:8px 10px;
-    font-style:italic;
-  }
-  .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;}
-  .tags span{
-    font-size:11.5px;color:var(--gray);border:1px solid var(--line);
-    border-radius:5px;padding:3px 8px;
-  }
-  .card-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:12px;}
-  .price{font-family:var(--font-mono);font-size:12.5px;color:var(--gray);}
-  .actions{display:flex;gap:8px;}
-  .actions button{
-    font-family:var(--font-body);font-size:12.5px;font-weight:500;
-    border-radius:6px;padding:6px 12px;cursor:pointer;
-  }
-  .btn-outline{background:none;border:1px solid var(--line);color:var(--ink);}
-  .btn-solid{background:var(--ink);border:1px solid var(--ink);color:#fff;}
+  .pro-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;display:flex;gap:14px;margin-bottom:12px;align-items:center;}
+  .pro-avatar{width:52px;height:52px;border-radius:12px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;color:#fff;}
+  .pro-body{flex:1;min-width:0;}
+  .pro-top{display:flex;justify-content:space-between;align-items:flex-start;}
+  .pro-name{font-size:14.5px;font-weight:700;display:flex;align-items:center;gap:5px;}
+  .pro-name .icon{font-size:15px;color:var(--indigo);}
+  .pro-role{font-size:12.5px;color:var(--text-2);margin-top:1px;}
+  .sponsor-badge{background:var(--sponsor-bg);color:var(--sponsor-text);font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:6px;white-space:nowrap;}
+  .pro-meta{font-size:12px;color:var(--text-2);margin-top:6px;display:flex;align-items:center;gap:5px;flex-wrap:wrap;}
+  .pro-meta .stars{color:var(--amber);font-weight:700;}
+  .pro-tags{display:flex;gap:6px;margin-top:9px;flex-wrap:wrap;}
+  .pro-tags span{font-size:11px;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:3px 8px;color:var(--text-2);}
+  .pro-side{text-align:right;flex-shrink:0;}
+  .pro-price-label{font-size:10.5px;color:var(--text-3);}
+  .pro-price{font-size:13px;font-weight:700;margin-bottom:8px;}
+  .pro-btn{background:var(--indigo);color:#fff;border:none;border-radius:8px;padding:8px 16px;font-size:12.5px;font-weight:600;}
 
-  /* stamp seal */
-  .seal{
-    position:absolute;top:16px;right:18px;width:52px;height:52px;
-    border:1.5px dashed var(--teal);border-radius:50%;
-    display:flex;flex-direction:column;align-items:center;justify-content:center;
-    transform:rotate(-6deg);color:var(--teal-dark);
-  }
-  .seal b{font-family:var(--font-display);font-size:14px;line-height:1;font-weight:600;}
-  .seal small{font-family:var(--font-mono);font-size:7.5px;letter-spacing:0.03em;margin-top:1px;}
-  .card.sponsored .seal{display:none;}
+  .load-more{width:100%;text-align:center;padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--surface);font-size:13px;font-weight:600;color:var(--text-2);}
+
+  /* ---- dashboard section ---- */
+  .dash-outer{background:var(--navy-2);padding:40px 0;}
+  .dash-outer .wrap{display:grid;grid-template-columns:220px 1fr 300px;gap:20px;}
+  .side-nav{background:var(--surface);border-radius:var(--radius);padding:16px;}
+  .side-user{display:flex;align-items:center;gap:10px;padding-bottom:14px;margin-bottom:10px;border-bottom:1px solid var(--border);}
+  .side-user .pro-avatar{width:38px;height:38px;font-size:12px;}
+  .side-user b{font-size:13px;display:block;}
+  .side-user span{font-size:11px;color:var(--text-2);}
+  .side-link{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:8px;font-size:13px;color:var(--text-2);margin-bottom:2px;}
+  .side-link .icon{font-size:18px;}
+  .side-link.active{background:var(--indigo-bg);color:var(--indigo);font-weight:600;}
+
+  .dash-main{display:flex;flex-direction:column;gap:16px;}
+  .panel{background:var(--surface);border-radius:var(--radius);padding:20px;}
+  .panel-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
+  .panel-head h3{font-size:15.5px;font-weight:700;}
+  .stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+  .stat-box{background:var(--bg);border-radius:10px;padding:12px 14px;}
+  .stat-box span{font-size:11px;color:var(--text-2);display:block;margin-bottom:5px;}
+  .stat-box b{font-size:19px;font-weight:700;display:block;}
+  .stat-box small{font-size:10.5px;color:var(--green);font-weight:600;}
+  .chart-placeholder{height:130px;display:flex;align-items:flex-end;gap:4px;margin-top:6px;}
+  .chart-placeholder div{flex:1;background:var(--indigo-bg);border-radius:3px 3px 0 0;}
+  .chart-placeholder div.b{background:var(--indigo);}
+
+  .campaign-panel .f-group{margin-bottom:14px;}
+  .campaign-panel .f-group label{font-size:11.5px;}
+  .create-btn{width:100%;background:var(--indigo);color:#fff;border:none;border-radius:9px;padding:11px;font-weight:700;font-size:13.5px;margin-top:6px;}
+
+  /* ---- bottom info ---- */
+  .info-outer{padding:44px 0;}
+  .info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+  .info-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;}
+  .info-card h4{font-size:14.5px;font-weight:700;margin-bottom:14px;}
+  .info-item{display:flex;gap:10px;margin-bottom:14px;}
+  .info-item .icon{background:var(--indigo-bg);color:var(--indigo);border-radius:8px;padding:6px;font-size:16px;height:fit-content;}
+  .info-item b{font-size:12.5px;display:block;margin-bottom:2px;}
+  .info-item p{font-size:11.5px;color:var(--text-2);}
 </style>
 </head>
 <body>
 
-<nav>
-  <div class="wrap">
-    <div class="logo">achei<span>.</span></div>
-    <div class="nav-links">
-      <a href="#">Sou profissional</a>
-      <a href="#" class="cta">Entrar</a>
-    </div>
-  </div>
-</nav>
-
-<header class="hero">
-  <div class="wrap">
-    <h1>Descreva o que você precisa. A gente encontra quem resolve.</h1>
-    <div class="search-box">
-      <input type="text" value="Vou abrir uma hamburgueria" readonly>
-      <button>Buscar</button>
-    </div>
-    <div class="examples">
-      <span>“Meu pai teve o benefício do INSS negado”</span>
-      <span>“Preciso de um logo pro meu salão”</span>
-      <span>“Contador para abrir uma startup”</span>
-    </div>
-  </div>
-</header>
-
-<div class="wrap">
-
-  <div class="consultora">
-    <span class="label">IA consultora · entendendo seu pedido</span>
-    <div class="bubble user">Vou abrir uma hamburgueria</div>
-    <div class="bubble ia">Legal! Esse tipo de negócio costuma precisar de vários especialistas de uma vez. Vou te mostrar os mais relevantes pra cada etapa.</div>
-    <div class="result-line">→ contador · advogado · designer · consultor sanitário · arquiteto</div>
-  </div>
-
-  <div class="results-meta">
-    <h2>Profissionais para "hamburgueria"</h2>
-    <span>37 encontrados</span>
-  </div>
-
-  <div class="section-tag sponsored">
-    <div class="dot"></div><p>Patrocinado</p>
-  </div>
-
-  <div class="card sponsored">
-    <div class="avatar" style="background:var(--ochre);">CS</div>
-    <div class="card-body">
-      <div class="card-top">
-        <div class="name-line">Camila Souza <small>· Designer de marcas</small></div>
-        <div class="sponsored-tag">Patrocinado</div>
+<div class="hero-outer">
+  <div class="wrap hero-grid">
+    <div class="brand-panel">
+      <div class="brand-row">
+        <div class="brand-mark"><span class="icon">search</span></div>
+        <div>
+          <div class="brand-name">ProFind</div>
+          <div class="brand-sub">Encontre o especialista certo.</div>
+        </div>
       </div>
-      <div class="meta-line">Belo Horizonte, MG · atende remoto e presencial</div>
-      <div class="ai-note">Especialista em identidade visual para food service. Já criou marca para 14 hamburguerias.</div>
-      <div class="tags"><span>Branding</span><span>Cardápio</span><span>Embalagem</span></div>
-      <div class="card-bottom">
-        <span class="price">R$ 1.200 – R$ 4.000</span>
-        <div class="actions"><button class="btn-outline">Perfil</button><button class="btn-solid">WhatsApp</button></div>
-      </div>
+      <h1>O Google dos <span class="grad">Especialistas.</span></h1>
+      <p class="lead">Busca inteligente com IA que entende sua necessidade e conecta você com os melhores profissionais.</p>
+      <div class="feat"><span class="icon">psychology</span> Busca por intenção com IA</div>
+      <div class="feat"><span class="icon">workspace_premium</span> Resultados orgânicos + patrocinados</div>
+      <div class="feat"><span class="icon">star</span> Avaliações e reputação real</div>
     </div>
-  </div>
 
-  <div class="card sponsored">
-    <div class="avatar" style="background:var(--ochre);">RT</div>
-    <div class="card-body">
-      <div class="card-top">
-        <div class="name-line">Rodrigo Teixeira <small>· Consultor sanitário</small></div>
-        <div class="sponsored-tag">Patrocinado</div>
+    <div class="hero-card">
+      <div class="hero-nav">
+        <div class="brand-row" style="margin:0;">
+          <div class="brand-mark" style="width:28px;height:28px;"><span class="icon" style="font-size:15px;">search</span></div>
+          <b>ProFind</b>
+        </div>
+        <div class="links">
+          <span>Como funciona</span><span>Para profissionais</span><span>Planos</span>
+          <button class="enter-btn">Entrar</button>
+        </div>
       </div>
-      <div class="meta-line">Belo Horizonte, MG · presencial</div>
-      <div class="ai-note">Cuida da regularização de cozinhas e alvará da vigilância sanitária, do zero à abertura.</div>
-      <div class="tags"><span>Alvará</span><span>Vigilância sanitária</span></div>
-      <div class="card-bottom">
-        <span class="price">a partir de R$ 800</span>
-        <div class="actions"><button class="btn-outline">Perfil</button><button class="btn-solid">WhatsApp</button></div>
+
+      <div class="hero-search-row">
+        <div>
+          <h2>O que você <span class="grad">precisa</span>?</h2>
+          <div class="search-bar">
+            <span class="icon">search</span>
+            <input value="Designer especialista em restaurantes" readonly>
+            <button>Buscar</button>
+          </div>
+          <div class="examples-label">Exemplos populares:</div>
+          <div class="example-chips">
+            <span>Advogado trabalhista</span><span>Contador para startup</span>
+            <span>Arquiteto de interiores</span><span>Desenvolvedor React</span>
+          </div>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat"><span class="icon">group</span><div><b>+250 mil</b><span>profissionais</span></div></div>
+          <div class="hero-stat"><span class="icon">star</span><div><b>+1 milhão</b><span>avaliações</span></div></div>
+          <div class="hero-stat"><span class="icon">domain</span><div><b>+50 mil</b><span>empresas atendidas</span></div></div>
+        </div>
+      </div>
+
+      <div class="how-block">
+        <h3>Como funciona</h3>
+        <div class="how-steps">
+          <div class="how-step"><span class="icon">edit_note</span><b>1. Descreva sua necessidade</b><p>Conte o que você precisa em linguagem natural.</p></div>
+          <div class="how-step"><span class="icon">psychology</span><b>2. IA entende e busca</b><p>Nossa IA interpreta e encontra os especialistas ideais.</p></div>
+          <div class="how-step"><span class="icon">compare_arrows</span><b>3. Compare e escolha</b><p>Veja perfis, avaliações e escolha o melhor para você.</p></div>
+          <div class="how-step"><span class="icon">handshake</span><b>4. Entre em contato</b><p>Fale diretamente com o profissional e resolva seu problema.</p></div>
+        </div>
       </div>
     </div>
   </div>
-
-  <div class="section-tag organic">
-    <div class="dot"></div><p>Resultados</p>
-  </div>
-
-  <div class="card">
-    <div class="seal"><b>96%</b><small>match</small></div>
-    <div class="avatar" style="background:var(--teal);">JP</div>
-    <div class="card-body">
-      <div class="card-top">
-        <div class="name-line">João Pereira <small>· Contador</small></div>
-      </div>
-      <div class="meta-line">Belo Horizonte, MG · remoto · 8 anos de experiência</div>
-      <div class="ai-note">Acompanhou a abertura de mais de 30 restaurantes e lanchonetes. Domina regime MEI e Simples Nacional.</div>
-      <div class="tags"><span>Abertura de empresa</span><span>Simples Nacional</span><span>Food service</span></div>
-      <div class="card-bottom">
-        <span class="price">R$ 250/mês</span>
-        <div class="actions"><button class="btn-outline">Perfil</button><button class="btn-solid">WhatsApp</button></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="seal"><b>91%</b><small>match</small></div>
-    <div class="avatar" style="background:var(--teal);">LA</div>
-    <div class="card-body">
-      <div class="card-top">
-        <div class="name-line">Luiza Andrade <small>· Advogada empresarial</small></div>
-      </div>
-      <div class="meta-line">Nova Lima, MG · remoto e presencial</div>
-      <div class="ai-note">Contratos, CNPJ e questões trabalhistas para negócios de pequeno porte no ramo alimentício.</div>
-      <div class="tags"><span>Contratos</span><span>CNPJ</span><span>Trabalhista</span></div>
-      <div class="card-bottom">
-        <span class="price">consulta: R$ 300</span>
-        <div class="actions"><button class="btn-outline">Perfil</button><button class="btn-solid">WhatsApp</button></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="seal"><b>84%</b><small>match</small></div>
-    <div class="avatar" style="background:var(--teal);">MF</div>
-    <div class="card-body">
-      <div class="card-top">
-        <div class="name-line">Marcos Ferreira <small>· Arquiteto</small></div>
-      </div>
-      <div class="meta-line">Belo Horizonte, MG · presencial</div>
-      <div class="ai-note">Projetos comerciais compactos, com foco em fluxo de cozinha e balcão de atendimento.</div>
-      <div class="tags"><span>Projeto comercial</span><span>Layout de cozinha</span></div>
-      <div class="card-bottom">
-        <span class="price">R$ 3.500 – R$ 9.000</span>
-        <div class="actions"><button class="btn-outline">Perfil</button><button class="btn-solid">WhatsApp</button></div>
-      </div>
-    </div>
-  </div>
-
 </div>
+
+<div class="results-outer">
+  <div class="wrap results-grid">
+    <div class="filters">
+      <div class="filters-head"><h4>Filtros</h4><span>Limpar</span></div>
+      <div class="f-group"><label>Localização</label><select class="f-select"><option>São Paulo, SP</option></select></div>
+      <div class="f-group"><label>Raio de 30 km</label><input type="range" class="f-range"></div>
+      <div class="f-group">
+        <label>Especialidades</label>
+        <div class="f-check"><input type="checkbox"> Identidade visual</div>
+        <div class="f-check"><input type="checkbox"> Cardápios</div>
+        <div class="f-check"><input type="checkbox"> Embalagens</div>
+        <div class="f-check"><input type="checkbox"> Sinalização</div>
+      </div>
+      <div class="f-group"><label>Faixa de preço</label><input type="range" class="f-range"></div>
+      <div class="f-group"><label>Avaliação mínima</label><div class="f-check" style="color:var(--amber);font-weight:600;">★★★★☆ 4,0+</div></div>
+      <div class="f-group">
+        <label>Atendimento</label>
+        <div class="f-check"><input type="checkbox"> Presencial</div>
+        <div class="f-check"><input type="checkbox"> Online</div>
+      </div>
+    </div>
+
+    <div class="results-main">
+      <h2>Resultados para "Designer especialista em restaurantes"</h2>
+
+      <div class="results-label">Patrocinados</div>
+      <div class="pro-card">
+        <div class="pro-avatar" style="background:linear-gradient(135deg,var(--indigo),var(--purple));">BA</div>
+        <div class="pro-body">
+          <div class="pro-top">
+            <div><div class="pro-name">Bruno Araújo <span class="icon">verified</span></div><div class="pro-role">Especialista em Branding Gastronômico</div></div>
+            <div class="sponsor-badge">Patrocinado</div>
+          </div>
+          <div class="pro-meta"><span class="stars">★ 5,0</span> (166 avaliações) · 72 projetos · São Paulo, SP · Atende online</div>
+          <div class="pro-tags"><span>Branding</span><span>Cardápios</span><span>Embalagens</span><span>+3</span></div>
+        </div>
+        <div class="pro-side"><div class="pro-price-label">a partir de</div><div class="pro-price">R$ 5.000</div><button class="pro-btn">Ver perfil</button></div>
+      </div>
+
+      <div class="pro-card">
+        <div class="pro-avatar" style="background:linear-gradient(135deg,#7C3AED,#4F46E5);">SA</div>
+        <div class="pro-body">
+          <div class="pro-top">
+            <div><div class="pro-name">Estúdio Sabor &amp; Arte</div><div class="pro-role">Branding para Food Service</div></div>
+            <div class="sponsor-badge">Patrocinado</div>
+          </div>
+          <div class="pro-meta"><span class="stars">★ 4,9</span> (98 avaliações) · 45 projetos · São Paulo, SP · Online e presencial</div>
+          <div class="pro-tags"><span>Branding</span><span>Cardápios</span><span>Redes sociais</span><span>+2</span></div>
+        </div>
+        <div class="pro-side"><div class="pro-price-label">a partir de</div><div class="pro-price">R$ 7.500</div><button class="pro-btn">Ver perfil</button></div>
+      </div>
+
+      <div class="results-label">Resultados recomendados pela IA</div>
+      <div class="pro-card">
+        <div class="pro-avatar" style="background:linear-gradient(135deg,#4F46E5,#818CF8);">ML</div>
+        <div class="pro-body">
+          <div class="pro-top">
+            <div><div class="pro-name">Mariana Lopes <span class="icon">verified</span></div><div class="pro-role">Designer de Marcas para Restaurantes</div></div>
+          </div>
+          <div class="pro-meta"><span class="stars">★ 5,0</span> (87 avaliações) · 63 projetos · São Paulo, SP · Atende online</div>
+          <div class="pro-tags"><span>Identidade visual</span><span>Cardápios</span><span>Embalagens</span><span>+2</span></div>
+        </div>
+        <div class="pro-side"><div class="pro-price-label">a partir de</div><div class="pro-price">R$ 4.000</div><button class="pro-btn">Ver perfil</button></div>
+      </div>
+
+      <button class="load-more">Carregar mais resultados</button>
+    </div>
+  </div>
+</div>
+
+<div class="dash-outer">
+  <div class="wrap">
+    <div class="side-nav">
+      <div class="side-user"><div class="pro-avatar" style="background:linear-gradient(135deg,var(--indigo),var(--purple));">C</div><div><b>Olá, Carlos</b><span>Designer</span></div></div>
+      <div class="side-link active"><span class="icon">dashboard</span>Dashboard</div>
+      <div class="side-link"><span class="icon">campaign</span>Campanhas</div>
+      <div class="side-link"><span class="icon">contact_mail</span>Leads</div>
+      <div class="side-link"><span class="icon">chat</span>Mensagens</div>
+      <div class="side-link"><span class="icon">calendar_month</span>Agenda</div>
+      <div class="side-link"><span class="icon">star</span>Avaliações</div>
+      <div class="side-link"><span class="icon">payments</span>Financeiro</div>
+      <div class="side-link"><span class="icon">person</span>Perfil</div>
+      <div class="side-link"><span class="icon">settings</span>Configurações</div>
+    </div>
+
+    <div class="dash-main">
+      <div class="panel">
+        <div class="panel-head"><h3>Dashboard</h3><span style="font-size:12px;color:var(--text-2);">01/05/2024 – 31/05/2024</span></div>
+        <div class="stat-grid">
+          <div class="stat-box"><span>Impressões</span><b>12.458</b><small>↑ 15%</small></div>
+          <div class="stat-box"><span>Visualizações</span><b>1.245</b><small>↑ 23%</small></div>
+          <div class="stat-box"><span>Leads</span><b>86</b><small>↑ 18%</small></div>
+          <div class="stat-box"><span>Contratações</span><b>7</b><small>↑ 16%</small></div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-head"><h3>Desempenho</h3><span style="font-size:12px;color:var(--text-2);">Impressões · Leads</span></div>
+        <div class="chart-placeholder">
+          <div style="height:40%"></div><div class="b" style="height:55%"></div><div style="height:35%"></div><div class="b" style="height:70%"></div>
+          <div style="height:50%"></div><div class="b" style="height:60%"></div><div style="height:45%"></div><div class="b" style="height:80%"></div>
+          <div style="height:38%"></div><div class="b" style="height:65%"></div><div style="height:42%"></div><div class="b" style="height:58%"></div>
+        </div>
+      </div>
+      <div class="stat-grid" style="grid-template-columns:1fr 1fr;">
+        <div class="panel"><span style="font-size:11px;color:var(--text-2);">Custo por lead</span><b style="font-size:19px;display:block;">R$ 12,45</b><small style="color:#DC2626;">↓ 8%</small></div>
+        <div class="panel"><span style="font-size:11px;color:var(--text-2);">Gasto total</span><b style="font-size:19px;display:block;">R$ 1.071,35</b><small style="color:var(--green);">↑ 14%</small></div>
+      </div>
+    </div>
+
+    <div class="panel campaign-panel">
+      <div class="panel-head"><h3>Criar campanha</h3></div>
+      <div class="f-group"><label>Especialidade</label><select class="f-select"><option>Designer de restaurantes</option></select></div>
+      <div class="f-group"><label>Palavras-chave</label><select class="f-select"><option>designer restaurante, identidade visual, branding gastronômico</option></select></div>
+      <div class="f-group"><label>Localização</label><select class="f-select"><option>São Paulo, SP · raio 25 km</option></select></div>
+      <div class="f-group"><label>Público</label><select class="f-select"><option>Restaurantes e bares</option></select></div>
+      <div class="f-group"><label>Orçamento diário</label><select class="f-select"><option>R$ 50,00</option></select></div>
+      <div class="f-group"><label>Valor máximo por lead</label><select class="f-select"><option>R$ 15,00</option></select></div>
+      <div class="f-group"><label>Modelo de cobrança</label><select class="f-select"><option>Por solicitação de orçamento</option></select></div>
+      <button class="create-btn">Criar campanha</button>
+    </div>
+  </div>
+</div>
+
+<div class="info-outer">
+  <div class="wrap info-grid">
+    <div class="info-card">
+      <h4>IA que entende intenção</h4>
+      <p style="font-size:12.5px;color:var(--text-2);margin-bottom:14px;">Nossa IA entende o que você precisa, mesmo que você não saiba explicar exatamente.</p>
+      <div class="info-item"><span class="icon">smart_toy</span><div><b>Entendi! Você pode precisar de:</b><p>Contador especializado em restaurantes, Advogado para contratos, Designer para identidade visual, Arquiteto para o espaço, Consultor sanitário.</p></div></div>
+    </div>
+    <div class="info-card">
+      <h4>Por que profissionais escolhem o ProFind?</h4>
+      <div class="info-item"><span class="icon">visibility</span><div><b>Mais visibilidade</b><p>Seja encontrado por quem realmente precisa de você.</p></div></div>
+      <div class="info-item"><span class="icon">verified_user</span><div><b>Leads qualificados</b><p>Receba contatos de pessoas realmente interessadas.</p></div></div>
+      <div class="info-item"><span class="icon">tune</span><div><b>Controle total</b><p>Você define orçamento, público e região da campanha.</p></div></div>
+    </div>
+    <div class="info-card">
+      <h4>Como funciona para profissionais</h4>
+      <div class="info-item"><span class="icon">badge</span><div><b>1. Crie seu perfil</b><p>Mostre seu trabalho e suas especialidades.</p></div></div>
+      <div class="info-item"><span class="icon">tune</span><div><b>2. Configure sua campanha</b><p>Escolha palavras-chave, região e orçamento.</p></div></div>
+      <div class="info-item"><span class="icon">inbox</span><div><b>3. Receba leads</b><p>Seja encontrado por pessoas que precisam de você.</p></div></div>
+      <div class="info-item"><span class="icon">handshake</span><div><b>4. Feche negócios</b><p>Converta leads em clientes e faça seu negócio crescer.</p></div></div>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
