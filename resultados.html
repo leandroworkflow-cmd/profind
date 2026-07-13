@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>ProFind — resultados da busca</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20,400,0,0" rel="stylesheet">
+<style>
+  :root{
+    --indigo:#4F46E5; --purple:#7C3AED; --amber:#F5A623;
+    --bg:#F7F8FC; --surface:#FFFFFF; --border:#E7E9F1;
+    --text:#12142A; --text-2:#6B7080; --text-3:#9AA0B4;
+    --sponsor-bg:#FFF3E0; --sponsor-text:#B45309; --indigo-bg:#EEF0FF; --radius:14px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.5;}
+  .icon{font-family:'Material Symbols Outlined';font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20;font-size:20px;line-height:1;}
+  a{text-decoration:none;color:inherit;}
+  .wrap{max-width:960px;margin:0 auto;padding:0 24px;}
+
+  /* nav */
+  nav{background:var(--surface);border-bottom:1px solid var(--border);}
+  .nav-row{display:flex;align-items:center;gap:24px;padding:14px 24px;max-width:960px;margin:0 auto;}
+  .nav-logo{font-weight:800;font-size:18px;color:var(--indigo);flex-shrink:0;}
+  .nav-logo span{color:var(--text-3);}
+  .nav-search{flex:1;display:flex;align-items:center;gap:8px;background:var(--bg);border:1px solid var(--border);border-radius:20px;padding:8px 16px;}
+  .nav-search input{flex:1;border:none;background:transparent;outline:none;font-size:13.5px;font-family:'Inter',sans-serif;}
+  .nav-search .icon{color:var(--text-3);font-size:18px;}
+  .nav-links{display:flex;gap:18px;font-size:13px;color:var(--text-2);flex-shrink:0;}
+
+  .results-outer{padding:28px 0 60px;}
+  .results-grid{display:grid;grid-template-columns:230px 1fr;gap:22px;}
+  .filters{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px;height:fit-content;}
+  .filters-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
+  .filters-head h4{font-size:14px;font-weight:700;}
+  .filters-head span{font-size:12px;color:var(--indigo);font-weight:600;}
+  .f-group{margin-bottom:18px;}
+  .f-group label{font-size:12px;font-weight:600;color:var(--text-2);display:block;margin-bottom:8px;}
+  .f-select{width:100%;font-size:13px;border:1px solid var(--border);border-radius:8px;padding:8px 10px;color:var(--text);background:var(--bg);}
+  .f-check{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--text-2);margin-bottom:7px;}
+  .f-range{width:100%;accent-color:var(--indigo);}
+
+  .results-main h2{font-size:17px;font-weight:700;margin-bottom:16px;}
+  .results-label{font-size:12px;font-weight:700;color:var(--text-3);letter-spacing:.04em;text-transform:uppercase;margin:4px 0 10px;}
+
+  .pro-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;display:flex;gap:14px;margin-bottom:12px;align-items:center;}
+  .pro-avatar{width:52px;height:52px;border-radius:12px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;color:#fff;}
+  .pro-body{flex:1;min-width:0;}
+  .pro-top{display:flex;justify-content:space-between;align-items:flex-start;}
+  .pro-name{font-size:14.5px;font-weight:700;display:flex;align-items:center;gap:5px;}
+  .pro-name .icon{font-size:15px;color:var(--indigo);}
+  .pro-role{font-size:12.5px;color:var(--text-2);margin-top:1px;}
+  .sponsor-badge{background:var(--sponsor-bg);color:var(--sponsor-text);font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:6px;white-space:nowrap;}
+  .pro-meta{font-size:12px;color:var(--text-2);margin-top:6px;display:flex;align-items:center;gap:5px;flex-wrap:wrap;}
+  .pro-meta .stars{color:var(--amber);font-weight:700;}
+  .pro-tags{display:flex;gap:6px;margin-top:9px;flex-wrap:wrap;}
+  .pro-tags span{font-size:11px;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:3px 8px;color:var(--text-2);}
+  .pro-side{text-align:right;flex-shrink:0;}
+  .pro-price-label{font-size:10.5px;color:var(--text-3);}
+  .pro-price{font-size:13px;font-weight:700;margin-bottom:8px;}
+  .pro-btn{background:var(--indigo);color:#fff;border:none;border-radius:8px;padding:8px 16px;font-size:12.5px;font-weight:600;cursor:pointer;}
+
+  .load-more{width:100%;text-align:center;padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--surface);font-size:13px;font-weight:600;color:var(--text-2);cursor:pointer;}
+
+  .ai-box{background:linear-gradient(135deg,var(--indigo-bg),#F5F0FF);border-radius:var(--radius);padding:16px 18px;margin-bottom:20px;display:flex;gap:12px;align-items:flex-start;}
+  .ai-box .icon{color:var(--indigo);background:#fff;border-radius:8px;padding:6px;}
+  .ai-box p{font-size:13px;color:var(--text);}
+  .ai-box p b{color:var(--indigo);}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-row">
+    <a href="index.html" class="nav-logo">ProFind<span>.</span></a>
+    <div class="nav-search">
+      <span class="icon">search</span>
+      <input value="Designer especialista em restaurantes" readonly>
+    </div>
+    <div class="nav-links">
+      <a href="dashboard.html">Para profissionais</a>
+      <a href="#">Entrar</a>
+    </div>
+  </div>
+</nav>
+
+<div class="results-outer">
+  <div class="wrap results-grid">
+    <div class="filters">
+      <div class="filters-head"><h4>Filtros</h4><span>Limpar</span></div>
+      <div class="f-group"><label>Localização</label><select class="f-select"><option>São Paulo, SP</option></select></div>
+      <div class="f-group"><label>Raio de 30 km</label><input type="range" class="f-range"></div>
+      <div class="f-group">
+        <label>Especialidades</label>
+        <div class="f-check"><input type="checkbox"> Identidade visual</div>
+        <div class="f-check"><input type="checkbox"> Cardápios</div>
+        <div class="f-check"><input type="checkbox"> Embalagens</div>
+        <div class="f-check"><input type="checkbox"> Sinalização</div>
+      </div>
+      <div class="f-group"><label>Faixa de preço</label><input type="range" class="f-range"></div>
+      <div class="f-group"><label>Avaliação mínima</label><div class="f-check" style="color:var(--amber);font-weight:600;">★★★★☆ 4,0+</div></div>
+      <div class="f-group">
+        <label>Atendimento</label>
+        <div class="f-check"><input type="checkbox"> Presencial</div>
+        <div class="f-check"><input type="checkbox"> Online</div>
+      </div>
+    </div>
+
+    <div class="results-main">
+      <h2>Resultados para "Designer especialista em restaurantes"</h2>
+
+      <div class="ai-box">
+        <span class="icon">auto_awesome</span>
+        <p><b>A IA entendeu:</b> você provavelmente precisa de um especialista em identidade visual com experiência no setor gastronômico. Também pode ser útil ver contadores e consultores sanitários para abertura de restaurantes.</p>
+      </div>
+
+      <div class="results-label">Patrocinados</div>
+      <div class="pro-card">
+        <div class="pro-avatar" style="background:linear-gradient(135deg,var(--indigo),var(--purple));">BA</div>
+        <div class="pro-body">
+          <div class="pro-top">
+            <div><div class="pro-name">Bruno Araújo <span class="icon">verified</span></div><div class="pro-role">Especialista em Branding Gastronômico</div></div>
+            <div class="sponsor-badge">Patrocinado</div>
+          </div>
+          <div class="pro-meta"><span class="stars">★ 5,0</span> (166 avaliações) · 72 projetos · São Paulo, SP · Atende online</div>
+          <div class="pro-tags"><span>Branding</span><span>Cardápios</span><span>Embalagens</span><span>+3</span></div>
+        </div>
+        <div class="pro-side"><div class="pro-price-label">a partir de</div><div class="pro-price">R$ 5.000</div><button class="pro-btn">Ver perfil</button></div>
+      </div>
+
+      <div class="pro-card">
+        <div class="pro-avatar" style="background:linear-gradient(135deg,#7C3AED,#4F46E5);">SA</div>
+        <div class="pro-body">
+          <div class="pro-top">
+            <div><div class="pro-name">Estúdio Sabor &amp; Arte</div><div class="pro-role">Branding para Food Service</div></div>
+            <div class="sponsor-badge">Patrocinado</div>
+          </div>
+          <div class="pro-meta"><span class="stars">★ 4,9</span> (98 avaliações) · 45 projetos · São Paulo, SP · Online e presencial</div>
+          <div class="pro-tags"><span>Branding</span><span>Cardápios</span><span>Redes sociais</span><span>+2</span></div>
+        </div>
+        <div class="pro-side"><div class="pro-price-label">a partir de</div><div class="pro-price">R$ 7.500</div><button class="pro-btn">Ver perfil</button></div>
+      </div>
+
+      <div class="results-label">Resultados recomendados pela IA</div>
+      <div class="pro-card">
+        <div class="pro-avatar" style="background:linear-gradient(135deg,#4F46E5,#818CF8);">ML</div>
+        <div class="pro-body">
+          <div class="pro-top">
+            <div><div class="pro-name">Mariana Lopes <span class="icon">verified</span></div><div class="pro-role">Designer de Marcas para Restaurantes</div></div>
+          </div>
+          <div class="pro-meta"><span class="stars">★ 5,0</span> (87 avaliações) · 63 projetos · São Paulo, SP · Atende online</div>
+          <div class="pro-tags"><span>Identidade visual</span><span>Cardápios</span><span>Embalagens</span><span>+2</span></div>
+        </div>
+        <div class="pro-side"><div class="pro-price-label">a partir de</div><div class="pro-price">R$ 4.000</div><button class="pro-btn">Ver perfil</button></div>
+      </div>
+
+      <div class="pro-card">
+        <div class="pro-avatar" style="background:linear-gradient(135deg,#F5A623,#F59E0B);">RC</div>
+        <div class="pro-body">
+          <div class="pro-top">
+            <div><div class="pro-name">Rafael Costa</div><div class="pro-role">Designer Gráfico e Cardápios</div></div>
+          </div>
+          <div class="pro-meta"><span class="stars">★ 4,8</span> (54 avaliações) · 38 projetos · São Paulo, SP · Atende online e presencial</div>
+          <div class="pro-tags"><span>Cardápios</span><span>Impressos</span></div>
+        </div>
+        <div class="pro-side"><div class="pro-price-label">a partir de</div><div class="pro-price">R$ 1.800</div><button class="pro-btn">Ver perfil</button></div>
+      </div>
+
+      <button class="load-more">Carregar mais resultados</button>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
