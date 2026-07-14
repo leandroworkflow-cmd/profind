@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Reivindique seu perfil — ProFind</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20,400,0,0" rel="stylesheet">
+<style>
+  :root{
+    --indigo:#4F46E5; --purple:#7C3AED; --amber:#F5A623;
+    --bg:#F7F8FC; --surface:#FFFFFF; --border:#E7E9F1;
+    --text:#12142A; --text-2:#6B7080; --text-3:#9AA0B4;
+    --indigo-bg:#EEF0FF; --green:#16A34A; --radius:14px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.5;}
+  .icon{font-family:'Material Symbols Outlined';font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20;font-size:20px;line-height:1;}
+  a{text-decoration:none;color:inherit;}
+  .wrap{max-width:640px;margin:0 auto;padding:0 24px;}
+
+  nav{background:var(--surface);border-bottom:1px solid var(--border);}
+  .nav-row{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:640px;margin:0 auto;}
+  .nav-logo{font-weight:800;font-size:18px;color:var(--indigo);}
+  .nav-logo span{color:var(--text-3);}
+
+  .outer{padding:36px 0 60px;}
+
+  .found-banner{background:var(--surface);border:1px dashed var(--border);border-radius:var(--radius);padding:16px 18px;display:flex;gap:12px;align-items:center;margin-bottom:8px;}
+  .found-avatar{width:46px;height:46px;border-radius:10px;background:var(--bg);border:1px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;color:var(--text-3);}
+  .found-banner b{font-size:14.5px;display:block;}
+  .found-banner span{font-size:12.5px;color:var(--text-2);}
+  .found-tag{margin-left:auto;background:var(--bg);color:var(--text-3);font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:6px;border:1px solid var(--border);white-space:nowrap;}
+
+  .intro{text-align:center;padding:26px 0 22px;}
+  .intro h1{font-size:23px;font-weight:800;margin-bottom:10px;}
+  .intro h1 .grad{background:linear-gradient(90deg,var(--indigo),var(--purple));-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .intro p{font-size:13.5px;color:var(--text-2);max-width:460px;margin:0 auto;}
+
+  .benefits{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:28px;}
+  .benefit{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px;text-align:center;}
+  .benefit .icon{background:var(--indigo-bg);color:var(--indigo);border-radius:9px;padding:8px;font-size:19px;margin-bottom:8px;}
+  .benefit b{font-size:12.5px;display:block;margin-bottom:3px;}
+  .benefit p{font-size:11px;color:var(--text-2);}
+
+  .panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px;margin-bottom:14px;}
+  .panel h3{font-size:14.5px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+  .panel h3 .step{background:var(--indigo);color:#fff;width:20px;height:20px;border-radius:50%;font-size:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .locked-row{display:flex;justify-content:space-between;font-size:12.5px;padding:9px 0;border-top:1px solid var(--border);color:var(--text-2);}
+  .locked-row:first-of-type{border-top:none;padding-top:0;}
+  .locked-row b{color:var(--text);font-weight:600;}
+
+  .f-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+  .f-group label{font-size:12px;font-weight:600;color:var(--text-2);display:block;margin-bottom:6px;}
+  .f-input,.f-select,textarea{width:100%;font-size:13px;border:1px solid var(--border);border-radius:8px;padding:9px 11px;color:var(--text);background:var(--bg);font-family:'Inter',sans-serif;}
+  textarea{resize:vertical;min-height:64px;}
+  .upload-box{border:1.5px dashed var(--border);border-radius:10px;padding:18px;text-align:center;color:var(--text-3);font-size:12.5px;}
+  .upload-box .icon{font-size:24px;margin-bottom:4px;display:block;}
+
+  .cta-btn{width:100%;background:var(--indigo);color:#fff;border:none;border-radius:10px;padding:13px;font-weight:700;font-size:14px;cursor:pointer;margin-top:6px;}
+  .fine-print{text-align:center;font-size:11.5px;color:var(--text-3);margin-top:12px;}
+</style>
+</head>
+<body>
+
+<nav><div class="nav-row"><a href="index.html" class="nav-logo">ProFind<span>.</span></a></div></nav>
+
+<div class="outer">
+  <div class="wrap">
+
+    <div class="found-banner">
+      <div class="found-avatar"><span class="icon">storefront</span></div>
+      <div>
+        <b>José das Tintas</b>
+        <span>Pintor · Região do Barreiro, Belo Horizonte, MG</span>
+      </div>
+      <div class="found-tag">Encontrado na web</div>
+    </div>
+
+    <div style="background:var(--indigo-bg);border-radius:10px;padding:10px 14px;display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+      <span class="icon" style="color:var(--indigo);font-size:17px;">trending_up</span>
+      <span style="font-size:12.5px;color:var(--indigo);font-weight:600;">3 pessoas já buscaram por você na ProFind essa semana e pediram pra ser avisadas</span>
+    </div>
+
+    <div class="intro">
+      <h1>Achamos seu negócio. <span class="grad">Agora é com você.</span></h1>
+      <p>Nossa IA localizou o José das Tintas em fontes públicas. Complete seu perfil pra aparecer em destaque, receber contatos e controlar o que é mostrado sobre você.</p>
+    </div>
+
+    <div class="benefits">
+      <div class="benefit"><span class="icon">visibility</span><b>Mais visibilidade</b><p>Suba no ranking de busca</p></div>
+      <div class="benefit"><span class="icon">contact_mail</span><b>Receba leads</b><p>Contato direto de clientes</p></div>
+      <div class="benefit"><span class="icon">shield</span><b>Você no controle</b><p>Edite ou remova seus dados</p></div>
+    </div>
+
+    <div class="panel">
+      <h3><span class="step">1</span> O que já encontramos</h3>
+      <div class="locked-row"><span>Nome do negócio</span><b>José das Tintas</b></div>
+      <div class="locked-row"><span>Categoria</span><b>Pintor</b></div>
+      <div class="locked-row"><span>Região</span><b>Barreiro, Belo Horizonte, MG</b></div>
+      <div class="locked-row"><span>Fonte</span><b>josedastintas.com.br</b></div>
+    </div>
+
+    <div class="panel">
+      <h3><span class="step">2</span> Complete o que só você pode preencher</h3>
+      <div class="f-row">
+        <div class="f-group"><label>WhatsApp</label><input class="f-input" placeholder="(31) 9 9999-9999"></div>
+        <div class="f-group"><label>E-mail</label><input class="f-input" placeholder="jose@email.com"></div>
+      </div>
+      <div class="f-group" style="margin-bottom:12px;"><label>Atendimento</label><select class="f-select"><option>Presencial</option></select></div>
+      <div class="f-group" style="margin-bottom:12px;"><label>Especialidades</label><input class="f-input" placeholder="Pintura residencial, textura, grafiato"></div>
+      <div class="f-group" style="margin-bottom:12px;"><label>Sobre você</label><textarea placeholder="Conte sua experiência, anos de atuação, diferenciais..."></textarea></div>
+      <div class="f-group"><label>Fotos de trabalhos anteriores</label>
+        <div class="upload-box"><span class="icon">add_photo_alternate</span>Arraste fotos ou clique para enviar</div>
+      </div>
+    </div>
+
+    <button class="cta-btn">Ativar meu perfil na ProFind</button>
+    <div class="fine-print">Não é seu negócio ou os dados estão errados? <a href="#" style="color:var(--indigo);">Nos avise aqui</a>.</div>
+
+  </div>
+</div>
+
+</body>
+</html>
