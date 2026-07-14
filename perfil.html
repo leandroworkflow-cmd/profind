@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Bruno Araújo — ProFind</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20,400,0,0" rel="stylesheet">
+<style>
+  :root{
+    --indigo:#4F46E5; --purple:#7C3AED; --amber:#F5A623;
+    --bg:#F7F8FC; --surface:#FFFFFF; --border:#E7E9F1;
+    --text:#12142A; --text-2:#6B7080; --text-3:#9AA0B4;
+    --indigo-bg:#EEF0FF; --green:#16A34A; --radius:14px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.5;}
+  .icon{font-family:'Material Symbols Outlined';font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20;font-size:20px;line-height:1;}
+  a{text-decoration:none;color:inherit;}
+  .wrap{max-width:960px;margin:0 auto;padding:0 24px;}
+
+  nav{background:var(--surface);border-bottom:1px solid var(--border);}
+  .nav-row{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:960px;margin:0 auto;}
+  .nav-logo{font-weight:800;font-size:18px;color:var(--indigo);}
+  .nav-logo span{color:var(--text-3);}
+  .nav-links{display:flex;gap:18px;font-size:13px;color:var(--text-2);align-items:center;}
+  .back-link{display:flex;align-items:center;gap:5px;font-size:13px;color:var(--text-2);margin:20px 0 4px;}
+  .back-link .icon{font-size:17px;}
+
+  .profile-outer{padding:6px 0 60px;}
+  .profile-grid{display:grid;grid-template-columns:280px 1fr;gap:22px;align-items:start;}
+
+  .pro-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px;position:sticky;top:20px;}
+  .pro-avatar-lg{width:84px;height:84px;border-radius:18px;background:linear-gradient(135deg,var(--indigo),var(--purple));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:26px;margin-bottom:14px;}
+  .pro-name-lg{font-size:19px;font-weight:800;display:flex;align-items:center;gap:6px;}
+  .pro-name-lg .icon{color:var(--indigo);font-size:18px;}
+  .pro-role-lg{font-size:13.5px;color:var(--text-2);margin-top:2px;}
+  .pro-rating{display:flex;align-items:center;gap:6px;margin-top:10px;font-size:13px;}
+  .pro-rating .stars{color:var(--amber);font-weight:700;}
+  .pro-rating span{color:var(--text-2);}
+  .pro-loc{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-2);margin-top:8px;}
+  .pro-loc .icon{font-size:16px;}
+
+  .contact-btns{display:flex;flex-direction:column;gap:8px;margin-top:18px;}
+  .contact-btns button{display:flex;align-items:center;justify-content:center;gap:8px;padding:10px;border-radius:9px;font-size:13.5px;font-weight:600;border:none;cursor:pointer;}
+  .btn-whatsapp{background:#22C55E;color:#fff;}
+  .btn-outline{background:var(--bg);border:1px solid var(--border) !important;color:var(--text);}
+
+  .info-row{display:flex;justify-content:space-between;font-size:12.5px;padding:10px 0;border-top:1px solid var(--border);}
+  .info-row span:first-child{color:var(--text-2);}
+  .info-row span:last-child{font-weight:600;}
+
+  .content{display:flex;flex-direction:column;gap:16px;}
+  .panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;}
+  .panel h3{font-size:15px;font-weight:700;margin-bottom:12px;}
+
+  .ai-summary{background:linear-gradient(135deg,var(--indigo-bg),#F5F0FF);border-radius:var(--radius);padding:16px 18px;display:flex;gap:12px;align-items:flex-start;}
+  .ai-summary .icon{color:var(--indigo);background:#fff;border-radius:8px;padding:6px;flex-shrink:0;}
+  .ai-summary p{font-size:13px;color:var(--text);}
+
+  .tags{display:flex;flex-wrap:wrap;gap:6px;}
+  .tags span{font-size:11.5px;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:4px 9px;color:var(--text-2);}
+
+  .portfolio-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+  .portfolio-item{aspect-ratio:4/3;border-radius:10px;background:linear-gradient(135deg,var(--indigo-bg),#F5F0FF);display:flex;align-items:center;justify-content:center;color:var(--indigo);}
+
+  .detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .detail-item{display:flex;gap:10px;}
+  .detail-item .icon{background:var(--indigo-bg);color:var(--indigo);border-radius:8px;padding:6px;font-size:16px;height:fit-content;}
+  .detail-item b{display:block;font-size:12.5px;}
+  .detail-item span{font-size:11.5px;color:var(--text-2);}
+
+  .review{padding:14px 0;border-top:1px solid var(--border);}
+  .review:first-of-type{border-top:none;padding-top:2px;}
+  .review-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+  .review-user{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;}
+  .review-avatar{width:28px;height:28px;border-radius:50%;background:var(--indigo-bg);color:var(--indigo);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;}
+  .review-stars{color:var(--amber);font-size:12.5px;}
+  .review p{font-size:12.5px;color:var(--text-2);}
+  .review-date{font-size:11px;color:var(--text-3);}
+
+  .rating-bars{display:flex;flex-direction:column;gap:6px;margin-bottom:16px;}
+  .rating-bar{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text-2);}
+  .rating-bar .track{flex:1;height:6px;background:var(--bg);border-radius:4px;overflow:hidden;}
+  .rating-bar .fill{height:100%;background:var(--amber);}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-row">
+    <a href="index.html" class="nav-logo">ProFind<span>.</span></a>
+    <div class="nav-links">
+      <a href="resultados.html">Voltar para busca</a>
+      <a href="cadastro-profissional.html">Para profissionais</a>
+      <a href="#">Entrar</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+  <a href="resultados.html" class="back-link"><span class="icon">arrow_back</span> Voltar aos resultados</a>
+</div>
+
+<div class="profile-outer">
+  <div class="wrap profile-grid">
+
+    <div class="pro-card">
+      <div class="pro-avatar-lg">BA</div>
+      <div class="pro-name-lg">Bruno Araújo <span class="icon">verified</span></div>
+      <div class="pro-role-lg">Especialista em Branding Gastronômico</div>
+      <div class="pro-rating"><span class="stars">★ 5,0</span><span>(166 avaliações)</span></div>
+      <div class="pro-loc"><span class="icon">location_on</span> São Paulo, SP · Atende online e presencial</div>
+
+      <div class="contact-btns">
+        <button class="btn-whatsapp"><span class="icon" style="color:#fff;">chat</span> Chamar no WhatsApp</button>
+        <button class="btn-outline"><span class="icon">call</span> Ligar</button>
+        <button class="btn-outline"><span class="icon">mail</span> Enviar e-mail</button>
+        <button class="btn-outline"><span class="icon">language</span> Visitar site</button>
+      </div>
+
+      <div class="info-row"><span>Atendimento</span><span>Seg a sex, 9h–18h</span></div>
+      <div class="info-row"><span>Disponibilidade</span><span style="color:var(--green);">Disponível esta semana</span></div>
+      <div class="info-row"><span>Experiência</span><span>12 anos</span></div>
+    </div>
+
+    <div class="content">
+
+      <div class="ai-summary">
+        <span class="icon">auto_awesome</span>
+        <p><b>Perfil gerado pela IA:</b> Bruno possui aproximadamente 12 anos de experiência em branding para restaurantes. Foram identificados mais de 60 projetos relacionados ao setor gastronômico. Seu portfólio demonstra forte domínio em identidade visual, cardápios, embalagens e posicionamento de marca.</p>
+      </div>
+
+      <div class="panel">
+        <h3>Sobre</h3>
+        <p style="font-size:13px;color:var(--text-2);margin-bottom:14px;">Designer especializado em construir marcas para negócios de alimentação — de hamburguerias a restaurantes finos. Trabalho do zero até o cardápio impresso, cuidando de cada ponto de contato da marca com o cliente.</p>
+        <div class="tags">
+          <span>Branding</span><span>Identidade visual</span><span>Cardápios</span>
+          <span>Embalagens</span><span>Naming</span><span>Sinalização</span>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3>Portfólio</h3>
+        <div class="portfolio-grid">
+          <div class="portfolio-item"><span class="icon" style="font-size:26px;">image</span></div>
+          <div class="portfolio-item"><span class="icon" style="font-size:26px;">image</span></div>
+          <div class="portfolio-item"><span class="icon" style="font-size:26px;">image</span></div>
+          <div class="portfolio-item"><span class="icon" style="font-size:26px;">image</span></div>
+          <div class="portfolio-item"><span class="icon" style="font-size:26px;">image</span></div>
+          <div class="portfolio-item"><span class="icon" style="font-size:26px;">image</span></div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3>Formação e certificações</h3>
+        <div class="detail-grid">
+          <div class="detail-item"><span class="icon">school</span><div><b>Design Gráfico</b><span>Universidade Presbiteriana Mackenzie</span></div></div>
+          <div class="detail-item"><span class="icon">workspace_premium</span><div><b>Certificação em Branding</b><span>Miami Ad School</span></div></div>
+          <div class="detail-item"><span class="icon">translate</span><div><b>Idiomas</b><span>Português, Inglês</span></div></div>
+          <div class="detail-item"><span class="icon">work</span><div><b>72 projetos realizados</b><span>Setor gastronômico</span></div></div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3>Avaliações</h3>
+        <div class="rating-bars">
+          <div class="rating-bar">Qualidade<div class="track"><div class="fill" style="width:96%"></div></div>4,9</div>
+          <div class="rating-bar">Prazo<div class="track"><div class="fill" style="width:88%"></div></div>4,5</div>
+          <div class="rating-bar">Preço<div class="track"><div class="fill" style="width:82%"></div></div>4,2</div>
+          <div class="rating-bar">Comunicação<div class="track"><div class="fill" style="width:98%"></div></div>5,0</div>
+        </div>
+
+        <div class="review">
+          <div class="review-top">
+            <div class="review-user"><div class="review-avatar">TL</div>Thiago Lima</div>
+            <div class="review-stars">★★★★★</div>
+          </div>
+          <p>Entendeu exatamente o conceito da minha hamburgueria e entregou uma marca muito acima do que eu esperava. Recomendo demais.</p>
+          <div class="review-date">Há 2 semanas</div>
+        </div>
+        <div class="review">
+          <div class="review-top">
+            <div class="review-user"><div class="review-avatar">FA</div>Fernanda Alves</div>
+            <div class="review-stars">★★★★★</div>
+          </div>
+          <p>Processo super organizado, do naming até o cardápio final. Só demorou um pouco mais do que o combinado.</p>
+          <div class="review-date">Há 1 mês</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
