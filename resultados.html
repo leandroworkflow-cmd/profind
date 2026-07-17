@@ -107,9 +107,17 @@
 <script>
 let TODOS_OS_DADOS = [];
 let CATEGORIA_ATIVA = "";
+let RESULTADO_IA = null;
 
 function normalizar(txt){
   return (txt || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
+
+function contemTermo(campo, termo){
+  const campoNorm = normalizar(campo);
+  if(campoNorm.includes(termo)) return true;
+  if(termo.length >= 5 && campoNorm.includes(termo.slice(0, -1))) return true;
+  return false;
 }
 
 function relevancia(item, termos){
@@ -121,7 +129,7 @@ function relevancia(item, termos){
   ];
   for(const termo of termos){
     for(const c of campos){
-      if(normalizar(c.valor).includes(termo)) score += c.peso;
+      if(contemTermo(c.valor, termo)) score += c.peso;
     }
   }
   return score;
@@ -202,7 +210,11 @@ function renderizar(){
     return true;
   });
 
-  if(termos.length > 0){
+  if(RESULTADO_IA !== null && termos.length > 0){
+    // resultado veio do backend (Vercel) — já ranqueado pela IA
+    const nomesFiltrados = new Set(filtrados.map(f => f.fonte_url));
+    filtrados = RESULTADO_IA.filter(r => nomesFiltrados.has(r.fonte_url));
+  } else if(termos.length > 0){
     filtrados = filtrados
       .map(item => ({ item, score: relevancia(item, termos) }))
       .filter(x => x.score > 0)
@@ -240,6 +252,7 @@ function renderizar(){
       <div class="pro-body">
         <div class="pro-name">${item.nome || 'Nome não identificado'}</div>
         <div class="pro-role">${item.categoria || ''}${item.regiao ? ' · ' + item.regiao : ''}</div>
+        ${item.motivo ? `<div class="pro-meta" style="color:var(--indigo);">✨ ${item.motivo}</div>` : ''}
         ${item.contato_publico ? `<div class="pro-meta">${item.contato_publico}</div>` : ''}
         <span class="pro-source">${item.fonte_url || ''}</span>
       </div>
@@ -250,6 +263,18 @@ function renderizar(){
   `).join('');
 }
 
+async function tentarBuscaComIA(q){
+  if(!q) return null;
+  try{
+    const res = await fetch('/api/buscar?q=' + encodeURIComponent(q));
+    if(!res.ok) return null;
+    const data = await res.json();
+    return data.resultados || [];
+  } catch {
+    return null; // sem backend disponível (ex: GitHub Pages) — cai no modo estático
+  }
+}
+
 async function carregar(){
   try{
     const res = await fetch('resultados.json', { cache: 'no-store' });
@@ -258,6 +283,14 @@ async function carregar(){
     TODOS_OS_DADOS = [];
   }
   popularFiltros(TODOS_OS_DADOS);
+
+  const params = new URLSearchParams(window.location.search);
+  const q = params.get('q') || '';
+  const viaIA = await tentarBuscaComIA(q);
+
+  if(viaIA !== null){
+    RESULTADO_IA = viaIA; // usado no lugar do cálculo local quando disponível
+  }
   renderizar();
 }
 
