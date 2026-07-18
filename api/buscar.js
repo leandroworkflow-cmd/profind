@@ -1,131 +1,147 @@
 // api/buscar.js
-// Função serverless do Vercel. Recebe a busca do usuário (?q=...), lê os
-// profissionais já coletados (resultados.json, na raiz do projeto) e usa a
-// Groq pra interpretar o pedido e devolver os mais relevantes, com o motivo
-// da recomendação.
+// Função serverless do Vercel — o motor de busca de verdade.
 //
-// Se não houver GROQ_API_KEY configurada (ou a chamada falhar), cai num
-// filtro simples por palavra-chave — nunca quebra a busca do usuário.
+// Fluxo: cliente digita → busca AO VIVO na web (Tavily) → extrai e estrutura
+// os profissionais encontrados (Groq) → responde. Sem lista de URL manual,
+// sem robô rodado à parte. Isso é o "Google dos profissionais" de verdade.
+//
+// Resultados também ficam salvos em resultados.json (cache), então a
+// PRÓXIMA busca pela mesma categoria+região é instantânea e não gasta
+// API de novo.
 
-import { readFile } from "node:fs/promises";
+import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
-const MODELO = "llama-3.3-70b-versatile";
+const MODELO_GROQ = "llama-3.3-70b-versatile";
 
 function normalizar(txt) {
-  return (txt || "")
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "");
+  return (txt || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 }
 
-function contemTermo(campo, termo) {
-  const campoNorm = normalizar(campo);
-  if (campoNorm.includes(termo)) return true;
-  // tolera variação de gênero/plural (ex: "advogado" deve achar "advogada")
-  if (termo.length >= 5 && campoNorm.includes(termo.slice(0, -1))) return true;
-  return false;
+async function buscarNaWeb(q, tavilyKey) {
+  const resposta = await fetch("https://api.tavily.com/search", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      api_key: tavilyKey,
+      query: `${q} contato telefone whatsapp`,
+      search_depth: "basic",
+      max_results: 8,
+    }),
+  });
+
+  if (!resposta.ok) throw new Error(`Tavily respondeu ${resposta.status}`);
+  const dados = await resposta.json();
+  return dados.results || []; // [{ title, url, content }, ...]
 }
 
-function filtrarSimples(dados, q) {
-  const termos = normalizar(q).split(/\s+/).filter(Boolean);
-  if (termos.length === 0) return dados;
-
-  return dados
-    .map((item) => {
-      let score = 0;
-      const campos = [
-        { valor: item.categoria, peso: 3 },
-        { valor: item.nome, peso: 2 },
-        { valor: item.regiao, peso: 2 },
-      ];
-      for (const termo of termos) {
-        for (const c of campos) {
-          if (contemTermo(c.valor, termo)) score += c.peso;
-        }
-      }
-      return { ...item, score };
-    })
-    .filter((item) => item.score > 0)
-    .sort((a, b) => b.score - a.score);
-}
-
-async function ranquearComIA(dados, q, apiKey) {
-  const prompt = `Você recebe um pedido de um cliente e uma lista de profissionais/negócios
-já coletados. Escolha quais realmente atendem ao pedido e ordene do mais pro
-menos relevante. Para cada um, escreva um motivo curto (uma frase) explicando
-por que ele atende ao pedido.
+async function estruturarComGroq(q, achados, groqKey) {
+  const prompt = `Você recebe um pedido de cliente e uma lista de páginas web
+encontradas numa busca. Identifique quais páginas realmente são de um
+profissional autônomo ou pequeno negócio prestador do serviço pedido — e
+estruture os dados.
 
 Responda APENAS com JSON válido, sem markdown, no formato:
-{"indices_relevantes": [{"indice": 0, "motivo": "..."}, ...]}
+{"profissionais": [{"nome": "", "categoria": "", "regiao": "", "contato_publico": "", "fonte_url": "", "motivo": ""}]}
 
-Use o "indice" exatamente como aparece na lista fornecida (posição, começando em 0).
-Se nenhum profissional da lista atender ao pedido, responda {"indices_relevantes": []}.
-Não invente profissionais que não estão na lista.`;
-
-  const listaParaIA = dados.map((d, i) => ({
-    indice: i,
-    nome: d.nome,
-    categoria: d.categoria,
-    regiao: d.regiao,
-  }));
+Regras:
+- Só inclua páginas que realmente pareçam ser do profissional/negócio, não notícia/blog/irrelevante.
+- "motivo" é uma frase curta de por que atende ao pedido do cliente.
+- "contato_publico" só se o texto trouxer e-mail/telefone explícito. Não invente.
+- Não invente nenhum dado que não esteja no texto fornecido.`;
 
   const resposta = await fetch("https://api.groq.com/openai/v1/chat/completions", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${apiKey}`,
+      Authorization: `Bearer ${groqKey}`,
     },
     body: JSON.stringify({
-      model: MODELO,
+      model: MODELO_GROQ,
       temperature: 0,
       messages: [
         { role: "system", content: prompt },
-        { role: "user", content: `Pedido do cliente: "${q}"\n\nLista: ${JSON.stringify(listaParaIA)}` },
+        {
+          role: "user",
+          content: `Pedido do cliente: "${q}"\n\nPáginas encontradas: ${JSON.stringify(
+            achados.map((a) => ({ titulo: a.title, url: a.url, resumo: (a.content || "").slice(0, 500) }))
+          )}`,
+        },
       ],
     }),
   });
 
   if (!resposta.ok) throw new Error(`Groq respondeu ${resposta.status}`);
-
   const corpo = await resposta.json();
   const conteudo = corpo.choices?.[0]?.message?.content ?? "{}";
   const parsed = JSON.parse(conteudo);
+  return parsed.profissionais || [];
+}
 
-  return (parsed.indices_relevantes || [])
-    .filter((r) => dados[r.indice])
-    .map((r) => ({ ...dados[r.indice], motivo: r.motivo }));
+async function lerCache() {
+  try {
+    const filePath = path.join(process.cwd(), "resultados.json");
+    return JSON.parse(await readFile(filePath, "utf-8"));
+  } catch {
+    return [];
+  }
+}
+
+async function salvarCache(dados) {
+  try {
+    const filePath = path.join(process.cwd(), "resultados.json");
+    await writeFile(filePath, JSON.stringify(dados, null, 2));
+  } catch {
+    // Em serverless, o disco é temporário — a escrita pode não persistir
+    // entre execuções. Isso é esperado; o cache "de verdade" é só um bônus
+    // dentro da mesma execução/instância. Não trava a resposta ao usuário.
+  }
 }
 
 export default async function handler(req, res) {
   const q = (req.query.q || "").toString().trim();
-
-  let dados = [];
-  try {
-    const filePath = path.join(process.cwd(), "resultados.json");
-    dados = JSON.parse(await readFile(filePath, "utf-8"));
-  } catch {
-    dados = [];
+  if (!q) {
+    return res.status(200).json({ resultados: [], modo: "sem_busca" });
   }
 
-  if (dados.length === 0) {
-    return res.status(200).json({ resultados: [], modo: "vazio" });
+  const cacheAtual = await lerCache();
+  const termos = normalizar(q).split(/\s+/).filter(Boolean);
+  const doCache = cacheAtual.filter((item) =>
+    termos.some((t) => normalizar(item.categoria).includes(t) || normalizar(item.nome).includes(t))
+  );
+
+  if (doCache.length > 0) {
+    return res.status(200).json({ resultados: doCache, modo: "cache" });
   }
 
-  const apiKey = process.env.GROQ_API_KEY;
+  const tavilyKey = process.env.TAVILY_API_KEY;
+  const groqKey = process.env.GROQ_API_KEY;
 
-  if (!apiKey || !q) {
-    return res.status(200).json({ resultados: filtrarSimples(dados, q), modo: "simples" });
-  }
-
-  try {
-    const ranqueados = await ranquearComIA(dados, q, apiKey);
-    return res.status(200).json({ resultados: ranqueados, modo: "ia" });
-  } catch (erro) {
+  if (!tavilyKey || !groqKey) {
     return res.status(200).json({
-      resultados: filtrarSimples(dados, q),
-      modo: "simples",
-      aviso: "IA indisponível no momento, usando busca por palavra-chave.",
+      resultados: [],
+      modo: "sem_chave",
+      aviso: "TAVILY_API_KEY e/ou GROQ_API_KEY não configuradas no Vercel.",
     });
   }
+
+  try {
+    const achados = await buscarNaWeb(q, tavilyKey);
+    if (achados.length === 0) {
+      return res.status(200).json({ resultados: [], modo: "busca_vazia" });
+    }
+
+    const profissionais = await estruturarComGroq(q, achados, groqKey);
+
+    const novos = profissionais.map((p) => ({ ...p, coletado_em: new Date().toISOString() }));
+    const combinados = [...cacheAtual, ...novos].filter(
+      (item, i, arr) => arr.findIndex((x) => x.fonte_url === item.fonte_url) === i
+    );
+    await salvarCache(combinados);
+
+    return res.status(200).json({ resultados: novos, modo: "busca_ao_vivo" });
+  } catch (erro) {
+    return res.status(200).json({ resultados: [], modo: "erro", aviso: erro.message });
+  }
 }
+
